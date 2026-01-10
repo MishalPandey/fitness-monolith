@@ -1,18 +1,16 @@
-package mishal.project.fitness.model;
+package mishal.project.fitness.dto;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UsersResponse {
     private String id;
 
-    private String name;
     private String email;
     private String firstName;
     private String lastName;
