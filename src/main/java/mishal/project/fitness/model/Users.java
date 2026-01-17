@@ -16,6 +16,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+//Without using Builder
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
