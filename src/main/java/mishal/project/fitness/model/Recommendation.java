@@ -23,7 +23,7 @@ public class Recommendation {
 
     @ManyToOne(fetch = FetchType.LAZY)  //Lazy will not load recommendations with users when only user got called,
     // or we can say, unless explicitly requested for recommendations, it will not get invoked when only user get called
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_recommendation_user"))
+    @JoinColumn(name = "users_id", nullable = false, foreignKey = @ForeignKey(name = "fk_recommendation_users"))
     @JsonIgnore
     private Users users;
 

@@ -30,6 +30,9 @@ dependencies {
 	// Lombok for reducing boilerplate code like getters and setters
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	// additional metrics ko json me database me stored kar rahe to woh json mapper apaneaap dede store
+	//kardeta yeh
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
 
 }
