@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
                                             // ID is the type of the entity's identifier(TYPE OF PRIMARY KEY)
 public interface UsersRepository extends JpaRepository<Users, String> {
 
+    Users findByEmail(String email);
 }
