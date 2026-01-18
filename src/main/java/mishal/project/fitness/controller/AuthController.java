@@ -1,5 +1,6 @@
 package mishal.project.fitness.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mishal.project.fitness.dto.LoginRequest;
 import mishal.project.fitness.dto.LoginResponse;
@@ -30,7 +31,7 @@ public class AuthController {
     //if we will use AllArgsConstructor then it will generate constructor for all fields including non final fields
 
     @PostMapping("/register")
-    public ResponseEntity<UsersResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<UsersResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
 
         return ResponseEntity.ok(userService.register(registerRequest));
         // ResponseEntity is used to represent the whole HTTP response: status code, headers, and body.
