@@ -6,13 +6,10 @@ import mishal.project.fitness.dto.LoginResponse;
 import mishal.project.fitness.dto.RegisterRequest;
 import mishal.project.fitness.dto.UsersResponse;
 import mishal.project.fitness.model.Users;
-import mishal.project.fitness.repository.UsersRepository;
 import mishal.project.fitness.security.JwtUtils;
 import mishal.project.fitness.service.UsersService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UsersService userService;
-    private final UsersRepository usersRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
 //    private  AuthController(UsersService userService) {
@@ -43,25 +38,14 @@ public class AuthController {
     }
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-
-        Authentication authentication = null;
         try {
-            Users users = usersRepository.findByEmail(loginRequest.getEmail());
-            if(users == null) {
-               return ResponseEntity.status(401).build();
-            }
-            if(!passwordEncoder.matches(loginRequest.getPassword(), users.getPassword())) {
-                return ResponseEntity.status(401).build();
-            }
-
+            Users users = userService.authenticate(loginRequest);
             String token = jwtUtils.generateToken(users.getId(), users.getRole().name());
-
             return ResponseEntity.ok(new LoginResponse(token, userService.mapToResponse(users)));
 
         } catch (AuthenticationException e) {
             e.printStackTrace();
             return ResponseEntity.status(401).build();
         }
-
     }
 }

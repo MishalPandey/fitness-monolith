@@ -1,11 +1,13 @@
 package mishal.project.fitness.service;
 
 import lombok.RequiredArgsConstructor;
+import mishal.project.fitness.dto.LoginRequest;
 import mishal.project.fitness.dto.RegisterRequest;
 import mishal.project.fitness.dto.UsersResponse;
 import mishal.project.fitness.model.Users;
 import mishal.project.fitness.model.UsersRole;
 import mishal.project.fitness.repository.UsersRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +55,16 @@ public class UsersService {
         usersResponse.setCreatedAt(savedUser.getCreatedAt());
         usersResponse.setUpdatedAt(savedUser.getUpdatedAt());
         return usersResponse;
+    }
+
+    public Users authenticate(LoginRequest loginRequest) {
+        Users users = usersRepository.findByEmail(loginRequest.getEmail());
+        if (users == null) {
+           throw new RuntimeException("Invalid Credentials");
+        }
+        if (!passwordEncoder.matches(loginRequest.getPassword(), users.getPassword())) {
+            throw new RuntimeException("Invalid Credentials");
+        }
+        return users;
     }
 }
